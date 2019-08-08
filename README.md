@@ -16,3 +16,5 @@ F4: fix with linter
 F5: prettify  
 F6: fix and prettify  
 F7: relint  
+F8: go to previous error  
+F9: go to next error  
