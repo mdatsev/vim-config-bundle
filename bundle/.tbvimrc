@@ -59,13 +59,15 @@ function SetupJavascript()
   map <F6> :call LinterFix()<CR>:call Prettify()<CR>
   map <F7> :SyntasticCheck<CR>
 
-  " Tab 
-  set ts=2 sw=2
+  " Tab settings
+  set expandtab
+  set tabstop=2
+  set softtabstop=2
+  set shiftwidth=2
 
   " Match syntax
-  syntax match tbAssert /\<assert\>/ containedin=jsFuncCall
-  syntax match tbAssert /\<assertPeer\>/ containedin=jsFuncCall
-
+  syntax match tbAssert /\<\(assert\|assertPeer\|ensureTempPeer\|ensureUser\|ensureConf\|ensureIoConn\|ensureOpenConn\)\(\s*.\s*\(isArguments\|isArray\|isBoolean\|isDate\|isElement\|isEmpty\|isError\|isFinite\|isFunction\|isInteger\|isLength\|isMap\|isNaN\|isNative\|isNil\|isNull\|isNumber\|isObject\|isObjectLike\|isPlainObject\|isRegExp\|isSafeInteger\|isSet\|isString\|isUndefine\|isTypedArray\|isWeakMap\|isWeakSet\|isEmpty\|isNotNil\|isNotEmpty\|isNotEmptyString\)\)\=\ze\s*(/ containedin=ALL
+  syntax match tbAssert /\<\(throwSystem\|throwUser\|throwPeer\|throwTempPeer\|throwConf\|throwIoConn\|throwOpenConn\)\ze\s*(/ containedin=ALL
   " Style as statement
   hi link tbAssert Statement
 
@@ -73,3 +75,9 @@ function SetupJavascript()
   " hi tbAssert cterm=bold ctermfg=Red ctermbg=NONE
 
 endfunction
+
+" Debug stuff
+" color koehler
+" map <F9> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+" \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+" \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
