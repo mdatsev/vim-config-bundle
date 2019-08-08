@@ -1,33 +1,41 @@
+" Starts pathogen
 execute pathogen#infect()
+
+" Recommended syntastic settings
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
-
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 
+" Enable eslint checker for js
 let g:syntastic_javascript_checkers = ['eslint']
 
 
-
+" Javascript setup (called only on js files)
 au Filetype javascript call SetupJavascript()
 function SetupJavascript()
 
+  " Toggle linter
   let g:linterEnabled = 1
   function ToggleLinter()
+    " Toggle
     SyntasticToggleMode
     let g:linterEnabled = !g:linterEnabled
     if g:linterEnabled
+      " When enabled immediately check
       SyntasticCheck
     endif
   endfunction
 
   function LinterFix()
+    " Runs eslint --fix on current content - see eslint-fix.sh
     :%!TMPFILE=$(mktemp --tmpdir=.); cat > $TMPFILE; eslint --fix $TMPFILE >/dev/null 2>&1; cat $TMPFILE; rm $TMPFILE
   endfunction
 
+  " Toggles left sidebar (uses vim signs)
   let g:sidebarEnabled = 1
   function ToggleSidebar()
     let g:sidebarEnabled = !g:sidebarEnabled
@@ -38,10 +46,12 @@ function SetupJavascript()
     endif
   endfunction
 
+  " Prettify from stdin as if prettifying current file (parser needs to know file type - for example jsx need different parsing)
   function Prettify()
     :%!prettier --stdin --stdin-filepath %
   endfunction
 
+  " Bind keys to functions
   map <F2> :call ToggleLinter()<CR>
   map <F3> :call ToggleSidebar()<CR>
   map <F4> :call LinterFix()<CR>
@@ -49,11 +59,17 @@ function SetupJavascript()
   map <F6> :call LinterFix()<CR>:call Prettify()<CR>
   map <F7> :SyntasticCheck<CR>
 
+  " Tab 
   set ts=2 sw=2
 
-  au Syntax javascript syntax match tbAssert /\<assert\>/ containedin=jsFuncCall
-  au Syntax javascript syntax match tbAssert /\<assertPeer\>/ containedin=jsFuncCall
+  " Match syntax
+  syntax match tbAssert /\<assert\>/ containedin=jsFuncCall
+  syntax match tbAssert /\<assertPeer\>/ containedin=jsFuncCall
 
-  hi tbAssert cterm=bold ctermfg=Red ctermbg=NONE
+  " Style as statement
+  hi link tbAssert Statement
+
+  " Custom style (not used)
+  " hi tbAssert cterm=bold ctermfg=Red ctermbg=NONE
 
 endfunction
