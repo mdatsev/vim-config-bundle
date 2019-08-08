@@ -10,42 +10,50 @@ let g:syntastic_check_on_wq = 0
 
 let g:syntastic_javascript_checkers = ['eslint']
 
-let g:linterEnabled = 1
-function ToggleLinter()
-  SyntasticToggleMode
-  let g:linterEnabled = !g:linterEnabled
-  if g:linterEnabled
-    SyntasticCheck
-  endif
+
+
+au Filetype javascript call SetupJavascript()
+function SetupJavascript()
+
+  let g:linterEnabled = 1
+  function ToggleLinter()
+    SyntasticToggleMode
+    let g:linterEnabled = !g:linterEnabled
+    if g:linterEnabled
+      SyntasticCheck
+    endif
+  endfunction
+
+  function LinterFix()
+    :%!TMPFILE=$(mktemp --tmpdir=.); cat > $TMPFILE; eslint --fix $TMPFILE >/dev/null 2>&1; cat $TMPFILE; rm $TMPFILE
+  endfunction
+
+  let g:sidebarEnabled = 1
+  function ToggleSidebar()
+    let g:sidebarEnabled = !g:sidebarEnabled
+    if g:sidebarEnabled
+      set scl=yes
+    else
+      set scl=no
+    endif
+  endfunction
+
+  function Prettify()
+    :%!prettier --stdin --stdin-filepath %
+  endfunction
+
+  map <F2> :call ToggleLinter()<CR>
+  map <F3> :call ToggleSidebar()<CR>
+  map <F4> :call LinterFix()<CR>
+  map <F5> :call Prettify()<CR>
+  map <F6> :call LinterFix()<CR>:call Prettify()<CR>
+  map <F7> :SyntasticCheck<CR>
+
+  set ts=2 sw=2
+
+  au Syntax javascript syntax match tbAssert /\<assert\>/ containedin=jsFuncCall
+  au Syntax javascript syntax match tbAssert /\<assertPeer\>/ containedin=jsFuncCall
+
+  hi tbAssert cterm=bold ctermfg=Red ctermbg=NONE
+
 endfunction
-
-function LinterFix()
-  :%!TMPFILE=$(mktemp --tmpdir=.); cat > $TMPFILE; eslint --fix $TMPFILE >/dev/null 2>&1; cat $TMPFILE; rm $TMPFILE
-endfunction
-
-let g:sidebarEnabled = 1
-function ToggleSidebar()
-  let g:sidebarEnabled = !g:sidebarEnabled
-  if g:sidebarEnabled
-    set scl=yes
-  else
-    set scl=no
-  endif
-endfunction
-
-function Prettify()
-  :%!prettier --stdin --stdin-filepath %
-endfunction
-
-map <F2> :call ToggleLinter()<CR>
-map <F3> :call ToggleSidebar()<CR>
-map <F4> :call LinterFix()<CR>
-map <F5> :call Prettify()<CR>
-map <F6> :call LinterFix()<CR>:call Prettify()<CR>
-map <F7> :SyntasticCheck<CR>
-
-set ts=2 sw=2
-
-au Syntax javascript syntax match tbAssert /\<assert\>/ containedin=jsFuncCall
-
-hi tbAssert cterm=bold ctermfg=Red ctermbg=NONE
