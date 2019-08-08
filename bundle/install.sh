@@ -17,6 +17,7 @@ mkdir -p ~/.vim/autoload ~/.vim/bundle
 cp ./pathogen.vim ~/.vim/autoload/pathogen.vim
 cp syntastic ~/.vim/bundle
 cp vim-javascript ~/.vim/bundle
+cp sensible ~/.vim/bundle
 
 # Install vimrc
 cp .tbvimrc ~/.tbvimrc
