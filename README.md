@@ -5,7 +5,8 @@ npm install -g
 
 # Run
 `unzip bundle.zip`  
-`./bundle/install.sh`  
+`cd bundle`  
+`./install.sh`  
 
 # Default keys
 Use in normal mode  

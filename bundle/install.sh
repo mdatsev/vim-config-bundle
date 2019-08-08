@@ -15,9 +15,9 @@ npm install -g \
 # Install Pathogen
 mkdir -p ~/.vim/autoload ~/.vim/bundle
 cp ./pathogen.vim ~/.vim/autoload/pathogen.vim
-cp syntastic ~/.vim/bundle
-cp vim-javascript ~/.vim/bundle
-cp sensible ~/.vim/bundle
+cp -r syntastic ~/.vim/bundle
+cp -r vim-javascript ~/.vim/bundle
+cp -r vim-sensible ~/.vim/bundle
 
 # Install vimrc
 cp .tbvimrc ~/.tbvimrc
