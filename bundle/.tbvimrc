@@ -58,6 +58,8 @@ function SetupJavascript()
   map <F5> :call Prettify()<CR>
   map <F6> :call LinterFix()<CR>:call Prettify()<CR>
   map <F7> :SyntasticCheck<CR>
+  map <F8> :lprevious<CR>
+  map <F9> :lnext<CR>
 
   " Tab settings
   set expandtab
