@@ -17,7 +17,8 @@ class C extends test {
   }
 
   hello (...args) {
-    assert.isArguments(args);
+    assert
+      .isArguments(args);
     for (const arg of args) {
       assert(arg.foo === arg.bar);
       someFunction('asd');

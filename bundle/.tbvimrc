@@ -66,7 +66,7 @@ function SetupJavascript()
   set shiftwidth=2
 
   " Match syntax
-  syntax match tbAssert /\<\(assert\|assertPeer\|ensureTempPeer\|ensureUser\|ensureConf\|ensureIoConn\|ensureOpenConn\)\(\s*.\s*\(isArguments\|isArray\|isBoolean\|isDate\|isElement\|isEmpty\|isError\|isFinite\|isFunction\|isInteger\|isLength\|isMap\|isNaN\|isNative\|isNil\|isNull\|isNumber\|isObject\|isObjectLike\|isPlainObject\|isRegExp\|isSafeInteger\|isSet\|isString\|isUndefine\|isTypedArray\|isWeakMap\|isWeakSet\|isEmpty\|isNotNil\|isNotEmpty\|isNotEmptyString\)\)\=\ze\s*(/ containedin=ALL
+  syntax match tbAssert /\<\(assert\|assertPeer\|ensureTempPeer\|ensureUser\|ensureConf\|ensureIoConn\|ensureOpenConn\)\(\_s*.\_s*\(isArguments\|isArray\|isBoolean\|isDate\|isElement\|isEmpty\|isError\|isFinite\|isFunction\|isInteger\|isLength\|isMap\|isNaN\|isNative\|isNil\|isNull\|isNumber\|isObject\|isObjectLike\|isPlainObject\|isRegExp\|isSafeInteger\|isSet\|isString\|isUndefine\|isTypedArray\|isWeakMap\|isWeakSet\|isEmpty\|isNotNil\|isNotEmpty\|isNotEmptyString\)\)\=\ze\_s*(/ containedin=ALL
   syntax match tbAssert /\<\(throwSystem\|throwUser\|throwPeer\|throwTempPeer\|throwConf\|throwIoConn\|throwOpenConn\)\ze\s*(/ containedin=ALL
   " Style as statement
   hi link tbAssert Statement
