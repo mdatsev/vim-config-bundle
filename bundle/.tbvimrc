@@ -32,7 +32,7 @@ function SetupJavascript()
 
   function LinterFix()
     " Runs eslint --fix on current content - see eslint-fix.sh
-    :%!TMPFILE=$(mktemp --tmpdir=.); cat > $TMPFILE; eslint --fix $TMPFILE >/dev/null 2>&1; cat $TMPFILE; rm $TMPFILE
+    :%!TMPFILE=$(mktemp --tmpdir=.); cat > $TMPFILE; npx eslint --fix $TMPFILE >/dev/null 2>&1; cat $TMPFILE; rm $TMPFILE
   endfunction
 
   " Toggles left sidebar (uses vim signs)
@@ -48,7 +48,7 @@ function SetupJavascript()
 
   " Prettify from stdin as if prettifying current file (parser needs to know file type - for example jsx need different parsing)
   function Prettify()
-    :%!prettier --stdin --stdin-filepath %
+    :%!npx prettier --stdin --stdin-filepath %
   endfunction
 
   " Bind keys to functions
