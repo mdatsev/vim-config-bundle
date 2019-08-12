@@ -15,43 +15,41 @@ if !exists('g:tbVimRcLoaded')
   " Enable eslint checker for js
   let g:syntastic_javascript_checkers = ['eslint']
 
+  let g:linterEnabled = 1
+  function ToggleLinter()
+    " Toggle
+    SyntasticToggleMode
+    let g:linterEnabled = !g:linterEnabled
+    if g:linterEnabled
+      " When enabled immediately check
+      SyntasticCheck
+    endif
+  endfunction
+
+  function LinterFix()
+    " Runs eslint --fix on current content - see eslint-fix.sh
+    :%!TMPFILE=$(mktemp --tmpdir=.); cat > $TMPFILE; npx eslint --fix $TMPFILE >/dev/null 2>&1; cat $TMPFILE; rm $TMPFILE
+  endfunction
+
+  " Toggles left sidebar (uses vim signs)
+  let g:sidebarEnabled = 1
+  function ToggleSidebar()
+    let g:sidebarEnabled = !g:sidebarEnabled
+    if g:sidebarEnabled
+      set scl=yes
+    else
+      set scl=no
+    endif
+  endfunction
+
+  " Prettify from stdin as if prettifying current file (parser needs to know file type - for example jsx need different parsing)
+  function Prettify()
+    :%!npx prettier --stdin --stdin-filepath %
+  endfunction
 
   " Javascript setup (called only on js files)
   au Filetype javascript call SetupJavascript()
   function SetupJavascript()
-
-    " Toggle linter
-    let g:linterEnabled = 1
-    function ToggleLinter()
-      " Toggle
-      SyntasticToggleMode
-      let g:linterEnabled = !g:linterEnabled
-      if g:linterEnabled
-        " When enabled immediately check
-        SyntasticCheck
-      endif
-    endfunction
-
-    function LinterFix()
-      " Runs eslint --fix on current content - see eslint-fix.sh
-      :%!TMPFILE=$(mktemp --tmpdir=.); cat > $TMPFILE; npx eslint --fix $TMPFILE >/dev/null 2>&1; cat $TMPFILE; rm $TMPFILE
-    endfunction
-
-    " Toggles left sidebar (uses vim signs)
-    let g:sidebarEnabled = 1
-    function ToggleSidebar()
-      let g:sidebarEnabled = !g:sidebarEnabled
-      if g:sidebarEnabled
-        set scl=yes
-      else
-        set scl=no
-      endif
-    endfunction
-
-    " Prettify from stdin as if prettifying current file (parser needs to know file type - for example jsx need different parsing)
-    function Prettify()
-      :%!npx prettier --stdin --stdin-filepath %
-    endfunction
 
     " Bind keys to functions
     map <F2> :call ToggleLinter()<CR>
