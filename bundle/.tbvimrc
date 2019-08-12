@@ -1,82 +1,86 @@
-" Starts pathogen
-execute pathogen#infect()
+" Check if file already sourced
+if !exists('g:tbVimRcLoaded')
+  " Starts pathogen
+  execute pathogen#infect()
 
-" Recommended syntastic settings
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
+  " Recommended syntastic settings
+  set statusline+=%#warningmsg#
+  set statusline+=%{SyntasticStatuslineFlag()}
+  set statusline+=%*
+  let g:syntastic_always_populate_loc_list = 1
+  let g:syntastic_auto_loc_list = 1
+  let g:syntastic_check_on_open = 1
+  let g:syntastic_check_on_wq = 0
 
-" Enable eslint checker for js
-let g:syntastic_javascript_checkers = ['eslint']
+  " Enable eslint checker for js
+  let g:syntastic_javascript_checkers = ['eslint']
 
 
-" Javascript setup (called only on js files)
-au Filetype javascript call SetupJavascript()
-function SetupJavascript()
+  " Javascript setup (called only on js files)
+  au Filetype javascript call SetupJavascript()
+  function SetupJavascript()
 
-  " Toggle linter
-  let g:linterEnabled = 1
-  function ToggleLinter()
-    " Toggle
-    SyntasticToggleMode
-    let g:linterEnabled = !g:linterEnabled
-    if g:linterEnabled
-      " When enabled immediately check
-      SyntasticCheck
-    endif
+    " Toggle linter
+    let g:linterEnabled = 1
+    function ToggleLinter()
+      " Toggle
+      SyntasticToggleMode
+      let g:linterEnabled = !g:linterEnabled
+      if g:linterEnabled
+        " When enabled immediately check
+        SyntasticCheck
+      endif
+    endfunction
+
+    function LinterFix()
+      " Runs eslint --fix on current content - see eslint-fix.sh
+      :%!TMPFILE=$(mktemp --tmpdir=.); cat > $TMPFILE; npx eslint --fix $TMPFILE >/dev/null 2>&1; cat $TMPFILE; rm $TMPFILE
+    endfunction
+
+    " Toggles left sidebar (uses vim signs)
+    let g:sidebarEnabled = 1
+    function ToggleSidebar()
+      let g:sidebarEnabled = !g:sidebarEnabled
+      if g:sidebarEnabled
+        set scl=yes
+      else
+        set scl=no
+      endif
+    endfunction
+
+    " Prettify from stdin as if prettifying current file (parser needs to know file type - for example jsx need different parsing)
+    function Prettify()
+      :%!npx prettier --stdin --stdin-filepath %
+    endfunction
+
+    " Bind keys to functions
+    map <F2> :call ToggleLinter()<CR>
+    map <F3> :call ToggleSidebar()<CR>
+    map <F4> :call LinterFix()<CR>
+    map <F5> :call Prettify()<CR>
+    map <F6> :call LinterFix()<CR>:call Prettify()<CR>
+    map <F7> :SyntasticCheck<CR>
+    map <F8> :lprevious<CR>
+    map <F9> :lnext<CR>
+
+    " Tab settings
+    set expandtab
+    set tabstop=2
+    set softtabstop=2
+    set shiftwidth=2
+
+    " Match syntax
+    syntax match tbAssert /\<\(assert\|assertPeer\|ensureTempPeer\|ensureUser\|ensureConf\|ensureIoConn\|ensureOpenConn\)\(\_s*.\_s*\(isArguments\|isArray\|isBoolean\|isDate\|isElement\|isEmpty\|isError\|isFinite\|isFunction\|isInteger\|isLength\|isMap\|isNaN\|isNative\|isNil\|isNull\|isNumber\|isObject\|isObjectLike\|isPlainObject\|isRegExp\|isSafeInteger\|isSet\|isString\|isUndefine\|isTypedArray\|isWeakMap\|isWeakSet\|isEmpty\|isNotNil\|isNotEmpty\|isNotEmptyString\)\)\=\ze\_s*(/ containedin=ALL
+    syntax match tbAssert /\<\(throwSystem\|throwUser\|throwPeer\|throwTempPeer\|throwConf\|throwIoConn\|throwOpenConn\)\ze\s*(/ containedin=ALL
+    " Style as statement
+    hi link tbAssert Statement
+
+    " Custom style (not used)
+    " hi tbAssert cterm=bold ctermfg=Red ctermbg=NONE
+
   endfunction
-
-  function LinterFix()
-    " Runs eslint --fix on current content - see eslint-fix.sh
-    :%!TMPFILE=$(mktemp --tmpdir=.); cat > $TMPFILE; npx eslint --fix $TMPFILE >/dev/null 2>&1; cat $TMPFILE; rm $TMPFILE
-  endfunction
-
-  " Toggles left sidebar (uses vim signs)
-  let g:sidebarEnabled = 1
-  function ToggleSidebar()
-    let g:sidebarEnabled = !g:sidebarEnabled
-    if g:sidebarEnabled
-      set scl=yes
-    else
-      set scl=no
-    endif
-  endfunction
-
-  " Prettify from stdin as if prettifying current file (parser needs to know file type - for example jsx need different parsing)
-  function Prettify()
-    :%!npx prettier --stdin --stdin-filepath %
-  endfunction
-
-  " Bind keys to functions
-  map <F2> :call ToggleLinter()<CR>
-  map <F3> :call ToggleSidebar()<CR>
-  map <F4> :call LinterFix()<CR>
-  map <F5> :call Prettify()<CR>
-  map <F6> :call LinterFix()<CR>:call Prettify()<CR>
-  map <F7> :SyntasticCheck<CR>
-  map <F8> :lprevious<CR>
-  map <F9> :lnext<CR>
-
-  " Tab settings
-  set expandtab
-  set tabstop=2
-  set softtabstop=2
-  set shiftwidth=2
-
-  " Match syntax
-  syntax match tbAssert /\<\(assert\|assertPeer\|ensureTempPeer\|ensureUser\|ensureConf\|ensureIoConn\|ensureOpenConn\)\(\_s*.\_s*\(isArguments\|isArray\|isBoolean\|isDate\|isElement\|isEmpty\|isError\|isFinite\|isFunction\|isInteger\|isLength\|isMap\|isNaN\|isNative\|isNil\|isNull\|isNumber\|isObject\|isObjectLike\|isPlainObject\|isRegExp\|isSafeInteger\|isSet\|isString\|isUndefine\|isTypedArray\|isWeakMap\|isWeakSet\|isEmpty\|isNotNil\|isNotEmpty\|isNotEmptyString\)\)\=\ze\_s*(/ containedin=ALL
-  syntax match tbAssert /\<\(throwSystem\|throwUser\|throwPeer\|throwTempPeer\|throwConf\|throwIoConn\|throwOpenConn\)\ze\s*(/ containedin=ALL
-  " Style as statement
-  hi link tbAssert Statement
-
-  " Custom style (not used)
-  " hi tbAssert cterm=bold ctermfg=Red ctermbg=NONE
-
-endfunction
+  let g:tbVimRcLoaded = 1
+endif
 
 " Debug stuff
 " color koehler

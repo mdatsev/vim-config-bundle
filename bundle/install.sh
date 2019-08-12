@@ -11,6 +11,10 @@
 #     eslint-plugin-unicorn@9.x \
 #     prettier@1.x
 
+
+# Remove in case already installed
+rm -rf ~/.vim/bundle/syntastic ~/.vim/bundle/vim-javascript ~/.vim/bundle/vim-sensible ~/.tbvimrc
+
 # Install Pathogen
 mkdir -p ~/.vim/autoload ~/.vim/bundle
 cp ./pathogen.vim ~/.vim/autoload/pathogen.vim
@@ -18,6 +22,11 @@ cp -r syntastic ~/.vim/bundle
 cp -r vim-javascript ~/.vim/bundle
 cp -r vim-sensible ~/.vim/bundle
 
-# Install vimrc
+# Install tbvimrc
 cp .tbvimrc ~/.tbvimrc
-echo $'\nsource ~/.tbvimrc\n' >> ~/.vimrc
+
+# Check if .tbvimrc is sourced
+if [ "$(head -n 1 ~/.vimrc)" == $'source ~/.tbvimrc\n' ]; then
+    # Replace beginning of .vimrc first line with "source ~/.tbvimrc\n"
+    sed -i $'1s;^;source ~/.tbvimrc\\n;' ~/.vimrc
+fi
