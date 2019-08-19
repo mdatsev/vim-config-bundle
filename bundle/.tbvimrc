@@ -91,8 +91,8 @@ if !exists('g:tbVimRcLoaded')
 endif
 
 " Debug stuff
-let g:syntastic_debug = 1
-let g:syntastic_debug_file = "/tmp/syntastic.log"
+" let g:syntastic_debug = 1
+" let g:syntastic_debug_file = "/tmp/syntastic.log"
 " color koehler
 " map <F9> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
 " \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
