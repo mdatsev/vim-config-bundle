@@ -1,7 +1,9 @@
 # Prerequisites
+tar
 bash  
 vim  
-npm install -g  
+eslint  
+prettier  
 
 # Install
 Download bundle from https://github.com/mdatsev/vim-config-bundle/releases  
@@ -9,6 +11,11 @@ Run:
 `tar -xzvf bundle.tar.gz`  
 `cd bundle`  
 `./install.sh`  
+
+# Building
+`git clone --recurse-submodules https://github.com/mdatsev/vim-config-bundle/`
+`cd vim-config-bundle`
+`./bundle.sh`
 
 # Default keys
 Use in normal mode  
