@@ -6,7 +6,7 @@ eslint
 prettier  
 
 # Install
-Download bundle from https://github.com/mdatsev/vim-config-bundle/releases  
+Download latest bundle.tar.gz from https://github.com/mdatsev/vim-config-bundle/releases  
 Run:  
 `tar -xzvf bundle.tar.gz`  
 `cd bundle`  
