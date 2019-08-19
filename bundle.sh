@@ -1,3 +1,3 @@
 #!/bin/bash
 
-zip -r bundle.zip bundle
+tar -czvf bundle.tar.gz bundle

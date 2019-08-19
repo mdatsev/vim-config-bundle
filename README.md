@@ -6,7 +6,7 @@ npm install -g
 # Install
 Download bundle from https://github.com/mdatsev/vim-config-bundle/releases  
 Run:  
-`unzip bundle.zip`  
+`tar -xzvf bundle.tar.gz`  
 `cd bundle`  
 `./install.sh`  
 
