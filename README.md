@@ -13,9 +13,9 @@ Run:
 `./install.sh`  
 
 # Building
-`git clone --recurse-submodules https://github.com/mdatsev/vim-config-bundle/`
-`cd vim-config-bundle`
-`./bundle.sh`
+`git clone --recurse-submodules https://github.com/mdatsev/vim-config-bundle/`  
+`cd vim-config-bundle`  
+`./bundle.sh`  
 
 # Default keys
 Use in normal mode  
