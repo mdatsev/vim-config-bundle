@@ -26,7 +26,10 @@ cp -r vim-sensible ~/.vim/bundle
 cp .tbvimrc ~/.tbvimrc
 
 # Check if .tbvimrc is sourced
-if [ "$(head -n 1 ~/.vimrc)" == $'source ~/.tbvimrc\n' ]; then
-    # Replace beginning of .vimrc first line with "source ~/.tbvimrc\n"
-    sed -i $'1s;^;source ~/.tbvimrc\\n;' ~/.vimrc
+if [ "$(head -n 1 ~/.vimrc)" != $'source ~/.tbvimrc' ]; then
+    # Prepend "source .tbvimrc" to .vimrc
+    TMPFILE=$(mktemp)
+    echo $'source ~/.tbvimrc\n' >> $TMPFILE
+    cat ~/.vimrc >> $TMPFILE
+    mv $TMPFILE ~/.vimrc
 fi

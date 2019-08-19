@@ -1,9 +1,7 @@
 module.exports = {
     'extends': ['standard', 'plugin:jest/recommended'],
     'plugins': [
-      'no-parameter-e',
-      'pep8-blank-lines',
-      'jest',
+      'jest'
     ],
     'rules': {
       'max-len': ['error', { 'code': 120 }],
@@ -16,9 +14,7 @@ module.exports = {
         'always-multiline',
       ],
       'no-extra-semi': 'error',
-      'no-multiple-empty-lines': 'off',
-      'no-parameter-e/no-parameter-e': 'error',
-      'pep8-blank-lines/pep8-blank-lines': 'error',
+      'no-multiple-empty-lines': 'off',     
       'prefer-arrow-callback': 'error',
       'semi': [
         'error',
