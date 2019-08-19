@@ -12,10 +12,16 @@ Run:
 `cd bundle`  
 `./install.sh`  
 
-# Building
+# Building from source  
+## Clone repo with submodules  
 `git clone --recurse-submodules https://github.com/mdatsev/vim-config-bundle/`  
 `cd vim-config-bundle`  
-`./bundle.sh`  
+`./bundle.sh`
+## Updating  
+`git pull`  
+## Installing  
+`cd bundle`  
+`./install.sh`  
 
 # Default keys
 Use in normal mode  
