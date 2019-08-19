@@ -14,6 +14,11 @@ if !exists('g:tbVimRcLoaded')
 
   " Enable eslint checker for js
   let g:syntastic_javascript_checkers = ['eslint']
+  let g:syntastic_javascript_eslint_exe = '$(npm bin)/eslint'
+  " https://github.com/vim-syntastic/syntastic/issues/1692
+  let g:syntastic_javascript_eslint_generic = 1
+  let g:syntastic_javascript_eslint_exec = '/bin/ls'
+  let g:syntastic_javascript_eslint_args = '-f compact'
 
   let g:linterEnabled = 1
   function ToggleLinter()
@@ -36,9 +41,9 @@ if !exists('g:tbVimRcLoaded')
   function ToggleSidebar()
     let g:sidebarEnabled = !g:sidebarEnabled
     if g:sidebarEnabled
-      set scl=yes
+      :SyntasticCheck
     else
-      set scl=no
+      sign unplace *
     endif
   endfunction
 
@@ -81,6 +86,8 @@ if !exists('g:tbVimRcLoaded')
 endif
 
 " Debug stuff
+" let g:syntastic_debug = 1
+" let g:syntastic_debug_file = "/tmp/syntastic.log"
 " color koehler
 " map <F9> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
 " \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
