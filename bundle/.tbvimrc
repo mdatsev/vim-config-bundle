@@ -1,5 +1,10 @@
 " Check if file already sourced
 if !exists('g:tbVimRcLoaded')
+
+  function GetNodeBinDir()
+    return '$(cd $(dirname ../examples/badcode.js); pnpm bin; cd - > /dev/null)/'
+  endfunction
+
   " Starts pathogen
   execute pathogen#infect()
 
@@ -14,7 +19,7 @@ if !exists('g:tbVimRcLoaded')
 
   " Enable eslint checker for js
   let g:syntastic_javascript_checkers = ['eslint']
-  let g:syntastic_javascript_eslint_exe = '$(npm bin)/eslint'
+  let g:syntastic_javascript_eslint_exe = GetNodeBinDir() . 'eslint'
   " https://github.com/vim-syntastic/syntastic/issues/1692
   let g:syntastic_javascript_eslint_generic = 1
   let g:syntastic_javascript_eslint_exec = '/bin/ls'
@@ -33,7 +38,7 @@ if !exists('g:tbVimRcLoaded')
 
   function LinterFix()
     " Runs eslint --fix on current content - see eslint-fix.sh
-    :%!TMPFILE=$(mktemp --tmpdir=.); cat > $TMPFILE; npx eslint --fix $TMPFILE >/dev/null 2>&1; cat $TMPFILE; rm $TMPFILE
+    execute ':%!cd $(dirname %); TMPFILE=$(mktemp --tmpdir=.); cat > $TMPFILE; $(pnpm bin)/eslint --fix $TMPFILE >/dev/null 2>&1; cat $TMPFILE; rm $TMPFILE; cd - > /dev/null'
   endfunction
 
   " Toggles left sidebar (uses vim signs)
@@ -86,8 +91,8 @@ if !exists('g:tbVimRcLoaded')
 endif
 
 " Debug stuff
-" let g:syntastic_debug = 1
-" let g:syntastic_debug_file = "/tmp/syntastic.log"
+let g:syntastic_debug = 1
+let g:syntastic_debug_file = "/tmp/syntastic.log"
 " color koehler
 " map <F9> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
 " \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
