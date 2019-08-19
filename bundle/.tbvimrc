@@ -2,7 +2,7 @@
 if !exists('g:tbVimRcLoaded')
 
   function GetNodeBinDir()
-    return '$(cd $(dirname ../examples/badcode.js); pnpm bin; cd - > /dev/null)/'
+    return '$(cd $(dirname ' . expand('%:p') . ' ); pnpm bin; cd - > /dev/null)/'
   endfunction
 
   " Starts pathogen
