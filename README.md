@@ -1,27 +1,17 @@
 # Prerequisites
-tar
+git  
 bash  
 vim  
-eslint  
-prettier  
+eslint installed in the project  
+prettier installed in the project  
 
-# Install
-Download latest bundle.tar.gz from https://github.com/mdatsev/vim-config-bundle/releases  
-Run:  
-`tar -xzvf bundle.tar.gz`  
-`cd bundle`  
-`./install.sh`  
-
-# Building from source  
-## Clone repo with submodules  
+# Getting started
+## Installing
 `git clone --recurse-submodules https://github.com/mdatsev/vim-config-bundle/`  
 `cd vim-config-bundle`  
-`./bundle.sh`
-## Updating  
-`git pull`  
-## Installing  
-`cd bundle`  
-`./install.sh`  
+`./install.sh`
+## Updating
+Just run `./install` again
 
 # Default keys
 Use in normal mode  

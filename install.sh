@@ -1,35 +1,32 @@
 #!/bin/bash
-# Install eslint and prettify npm dependancies
-# npm install -g \
-#     eslint@5.x \
-#     eslint-config-standard@12.x \
-#     eslint-plugin-import@2.x \
-#     eslint-plugin-jest@22.x \
-#     eslint-plugin-node@9.x \
-#     eslint-plugin-promise@4.x \
-#     eslint-plugin-standard@4.x \
-#     eslint-plugin-unicorn@9.x \
-#     prettier@1.x
 
+echo 'Pulling from git...'
+git pull --quiet
 
-# Remove in case already installed
+echo 'Removing any old files...'
 rm -rf ~/.vim/bundle/syntastic ~/.vim/bundle/vim-javascript ~/.vim/bundle/vim-sensible ~/.tbvimrc
 
-# Install Pathogen
+echo 'Installing pathogen...'
 mkdir -p ~/.vim/autoload ~/.vim/bundle
-cp ./pathogen.vim ~/.vim/autoload/pathogen.vim
+cp ./src/pathogen.vim ~/.vim/autoload/pathogen.vim
+
+echo 'Installing syntastic...'
 cp -r ./src/syntastic ~/.vim/bundle
+echo 'Installing vim-javascript...'
 cp -r ./src/vim-javascript ~/.vim/bundle
+echo 'Installing vim-sensible...'
 cp -r ./src/vim-sensible ~/.vim/bundle
 
-# Install tbvimrc
+echo 'Installing .tbvimrc...'
 cp ./src/.tbvimrc ~/.tbvimrc
 
-# Check if .tbvimrc is sourced
+echo 'Checking .vimrc...'
 if [ "$(head -n 1 ~/.vimrc)" != $'source ~/.tbvimrc' ]; then
-    # Prepend "source .tbvimrc" to .vimrc
+    echo 'Updating .vimrc...'
     TMPFILE=$(mktemp)
     echo $'source ~/.tbvimrc\n' >> $TMPFILE
     cat ~/.vimrc >> $TMPFILE
     mv $TMPFILE ~/.vimrc
 fi
+
+echo 'Installed successfully'
