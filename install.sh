@@ -18,12 +18,12 @@ rm -rf ~/.vim/bundle/syntastic ~/.vim/bundle/vim-javascript ~/.vim/bundle/vim-se
 # Install Pathogen
 mkdir -p ~/.vim/autoload ~/.vim/bundle
 cp ./pathogen.vim ~/.vim/autoload/pathogen.vim
-cp -r syntastic ~/.vim/bundle
-cp -r vim-javascript ~/.vim/bundle
-cp -r vim-sensible ~/.vim/bundle
+cp -r ./src/syntastic ~/.vim/bundle
+cp -r ./src/vim-javascript ~/.vim/bundle
+cp -r ./src/vim-sensible ~/.vim/bundle
 
 # Install tbvimrc
-cp .tbvimrc ~/.tbvimrc
+cp ./src/.tbvimrc ~/.tbvimrc
 
 # Check if .tbvimrc is sourced
 if [ "$(head -n 1 ~/.vimrc)" != $'source ~/.tbvimrc' ]; then
