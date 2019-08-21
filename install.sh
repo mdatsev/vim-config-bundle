@@ -21,6 +21,10 @@ echo 'Installing .tbvimrc...'
 cp ./src/.tbvimrc ~/.tbvimrc
 
 echo 'Checking .vimrc...'
+if [ ! -f ~/.vimrc ]; then
+    echo 'No .vimrc - creating .vimrc...'
+    touch ~/.vimrc
+fi
 if [ "$(head -n 1 ~/.vimrc)" != $'source ~/.tbvimrc' ]; then
     echo 'Updating .vimrc...'
     TMPFILE=$(mktemp)
