@@ -11,10 +11,10 @@ prettier installed in the project
 `cd vim-config-bundle`  
 `./install.sh`
 ## Updating
-Just run `./install` again
+Just run `./install.sh` again
 
 # Default keys
-Use in normal mode  
+Use in normal(command) mode  
 F2: toggle linter  
 F3: toggle sidebar  
 F4: fix with linter  
